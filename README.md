@@ -1,6 +1,10 @@
-# iobroker-script-examples
+# ioBroker Script Examples
 
 Tips and tricks how to use the [JavaScript](https://github.com/ioBroker/ioBroker.javascript) adapter of ioBroker
+
+## Sponsored by
+
+[![ioBroker Master Kurs](https://haus-automatisierung.com/images/ads/ioBroker-Kurs.png)](https://haus-automatisierung.com/iobroker-kurs/?refid=iobroker-scripts)
 
 ## License
 
