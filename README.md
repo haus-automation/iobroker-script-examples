@@ -2,6 +2,11 @@
 
 Tips and tricks how to use the [JavaScript](https://github.com/ioBroker/ioBroker.javascript) adapter of ioBroker
 
+## Scripts
+
+- System
+  - [Get all stopped instances](system/get-all-stopped-instances.md)
+
 ## Sponsored by
 
 [![ioBroker Master Kurs](https://haus-automatisierung.com/images/ads/ioBroker-Kurs.png)](https://haus-automatisierung.com/iobroker-kurs/?refid=iobroker-scripts)
