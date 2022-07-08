@@ -7,6 +7,9 @@ Tips and tricks how to use the [JavaScript](https://github.com/ioBroker/ioBroker
 - System
   - [Get all stopped instances](system/get-all-stopped-instances.md)
 
+- Logging
+  - [History data as csv via mail](logging/history-as-mail-csv.md)
+
 ## Sponsored by
 
 [![ioBroker Master Kurs](https://haus-automatisierung.com/images/ads/ioBroker-Kurs.png)](https://haus-automatisierung.com/iobroker-kurs/?refid=iobroker-scripts)
