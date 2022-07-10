@@ -4,6 +4,9 @@ Tips and tricks how to use the [JavaScript](https://github.com/ioBroker/ioBroker
 
 ## Scripts
 
+- Weather
+  - [Get min and max temperature of yr.no weather](weather/yr-min-max-temperature.md)
+
 - System
   - [Get all stopped instances](system/get-all-stopped-instances.md)
 

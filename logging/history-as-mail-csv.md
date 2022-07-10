@@ -5,6 +5,8 @@
 - [history adapter](https://github.com/ioBroker/ioBroker.history)
 - [eMail adapter](https://github.com/iobroker-community-adapters/ioBroker.email)
 
+## Script
+
 ```javascript
 const objId = 'yr.0.forecastHourly.0h.air_temperature';
 const mailFrom = 'iobroker@mydomain.com';

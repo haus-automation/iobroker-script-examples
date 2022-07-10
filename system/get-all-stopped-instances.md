@@ -1,5 +1,7 @@
 # Get all stopped instances
 
+## Script
+
 ```javascript
 const aliveIds = Array.prototype.slice.apply($('system.adapter.*.*.alive'));
 
