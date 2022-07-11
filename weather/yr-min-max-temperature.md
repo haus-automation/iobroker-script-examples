@@ -30,3 +30,5 @@ on({id: 'yr.0.forecast.info.object', change: 'ne'}, async (obj) => {
         );
 });
 ```
+
+[![ioBroker Master Kurs](https://haus-automatisierung.com/images/ads/ioBroker-Kurs.png)](https://haus-automatisierung.com/iobroker-kurs/?refid=iobroker-scripts)

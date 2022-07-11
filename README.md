@@ -12,6 +12,7 @@ Tips and tricks how to use the [JavaScript](https://github.com/ioBroker/ioBroker
 
 - Logging
   - [History data as csv via mail](logging/history-as-mail-csv.md)
+  - [Save history data as csv to files](logging/history-save-csv.md)
 
 ## Sponsored by
 
