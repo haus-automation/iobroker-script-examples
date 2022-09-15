@@ -9,6 +9,7 @@ Tips and tricks how to use the [JavaScript](https://github.com/ioBroker/ioBroker
 
 - System
   - [Get all stopped instances](system/get-all-stopped-instances.md)
+  - [Update geo position in system config](system/update-geo-position-system-config.md)
 
 - Logging
   - [History data as csv via mail](logging/history-as-mail-csv.md)
