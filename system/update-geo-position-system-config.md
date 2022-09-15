@@ -4,6 +4,24 @@
 
 ```javascript
 function updateGeoPosition(lon, lat) {
+    extendObject(
+        'system.config',
+        {
+            common: {
+                longitude: lon,
+                latitude: lat
+            }
+        }
+    );
+}
+
+updateGeoPosition(8.2, 51.2);
+```
+
+## Script (not smart)
+
+```javascript
+function updateGeoPosition(lon, lat) {
     const systemConfig = getObject('system.config');
     let changedConfig = false;
 
