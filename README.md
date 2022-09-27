@@ -4,8 +4,8 @@ Tips and tricks how to use the [JavaScript](https://github.com/ioBroker/ioBroker
 
 ## Scripts
 
-- Weather
-  - [Get min and max temperature of yr.no weather](weather/yr-min-max-temperature.md)
+- Objects/States
+  - [Get enum value of object definition](objects-states/enum-value-of-object-definition.md)
 
 - System
   - [Get all stopped instances](system/get-all-stopped-instances.md)
@@ -14,6 +14,9 @@ Tips and tricks how to use the [JavaScript](https://github.com/ioBroker/ioBroker
 - Logging
   - [History data as csv via mail](logging/history-as-mail-csv.md)
   - [Save history data as csv to files](logging/history-save-csv.md)
+
+- Weather
+  - [Get min and max temperature of yr.no weather](weather/yr-min-max-temperature.md)
 
 ## Sponsored by
 
