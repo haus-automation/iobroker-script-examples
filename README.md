@@ -5,6 +5,7 @@ Tips and tricks how to use the [JavaScript](https://github.com/ioBroker/ioBroker
 ## Scripts
 
 - Objects/States
+  - [Add object id to enum](objects-states/add-objectid-to-enum.md)
   - [Get enum value of object definition](objects-states/enum-value-of-object-definition.md)
 
 - System
