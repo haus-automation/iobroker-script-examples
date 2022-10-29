@@ -59,3 +59,5 @@ function addToEnum(enumId, objId) {
 // Test
 addToEnum('enum.rooms.living_room', '0_userdata.0.mydate');
 ```
+
+[![ioBroker Master Kurs](https://haus-automatisierung.com/images/ads/ioBroker-Kurs.png)](https://haus-automatisierung.com/iobroker-kurs/?refid=iobroker-scripts)
