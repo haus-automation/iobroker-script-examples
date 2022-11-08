@@ -18,6 +18,7 @@ Tips and tricks how to use the [JavaScript](https://github.com/ioBroker/ioBroker
 
 - Weather
   - [Get min and max temperature of yr.no weather](weather/yr-min-max-temperature.md)
+  - [Fill astro states](weather/fill-astro-states.md)
 
 ## Sponsored by
 
