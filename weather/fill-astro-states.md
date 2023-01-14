@@ -20,7 +20,7 @@ function fillAstroStates() {
             const timeFormatted = `${h < 10 ? '0' + h : h}:${m < 10 ? '0' + m : m}`;
             const objId = `astro.${t}`;
 
-            if (!existsObject(objId)) {
+            if (!existsState(`javascript.0.${objId}`)) {
                 createState(objId, timeFormatted, { name: `Astro ${t}`, type: 'string', role: 'value' }); 
             } else {
                 setState(objId, timeFormatted, true);
