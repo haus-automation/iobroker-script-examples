@@ -3,6 +3,7 @@
 ## Script
 
 ```javascript
+// v0.1
 function addToEnum(enumId, objId) {
     if (existsObject(objId)) {
         if (existsObject(enumId)) {
@@ -32,6 +33,7 @@ addToEnum('enum.rooms.living_room', '0_userdata.0.mydate');
 ## Script (smarter?)
 
 ```javascript
+// v0.1
 function addToEnum(enumId, objId) {
     if (existsObject(objId)) {
         if (existsObject(enumId)) {

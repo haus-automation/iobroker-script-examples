@@ -3,6 +3,7 @@
 ## Script
 
 ```javascript
+// v0.1
 function getStateOptions(objId) {
     const obj = getObject(objId);
 
@@ -89,7 +90,7 @@ function getStateOptionByValue(objId) {
 }
 ```
 
-### Script
+### Test
 
 ```javascript
 setState('0_userdata.0.test', 2, true);

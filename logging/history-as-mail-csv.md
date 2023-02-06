@@ -8,6 +8,7 @@
 ## Script
 
 ```javascript
+// v0.1
 const objId = 'yr.0.forecastHourly.0h.air_temperature';
 const mailFrom = 'iobroker@mydomain.com';
 const mailTo = 'yourmail@mydomain.com';

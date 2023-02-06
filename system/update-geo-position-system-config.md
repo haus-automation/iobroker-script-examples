@@ -3,6 +3,7 @@
 ## Script
 
 ```javascript
+// v0.1
 function updateGeoPosition(lon, lat) {
     extendObject(
         'system.config',
@@ -21,6 +22,7 @@ updateGeoPosition(8.2, 51.2);
 ## Script (not smart)
 
 ```javascript
+// v0.1
 function updateGeoPosition(lon, lat) {
     const systemConfig = getObject('system.config');
     let changedConfig = false;

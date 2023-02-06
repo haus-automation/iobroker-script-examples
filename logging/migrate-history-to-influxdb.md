@@ -9,6 +9,7 @@
 ## Script
 
 ```javascript
+// v0.1
 const migrateObjId = 'yr.0.forecastHourly.0h.air_temperature';
 const stepSize = 60 * 60 * 24 * 7 * 1000; // select 1 week per run
 const batchLimit = 1000;

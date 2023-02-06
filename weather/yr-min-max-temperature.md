@@ -7,7 +7,8 @@
 ## Script
 
 ```javascript
-on({id: 'yr.0.forecast.info.object', change: 'ne'}, async (obj) => {
+// v0.1
+on({ id: 'yr.0.forecast.info.object', change: 'ne' }, async (obj) => {
     const dateToday = new Date().getDate();
 
     const forecastObj = JSON.parse(obj.state.val);

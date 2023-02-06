@@ -7,6 +7,7 @@
 ## Script
 
 ```javascript
+// v0.1
 const objId = 'yr.0.forecastHourly.0h.air_temperature';
 
 const csvDateFormat = 'DD.MM.YYYY hh:mm:ss';

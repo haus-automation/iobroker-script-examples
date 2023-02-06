@@ -3,6 +3,7 @@
 ## Script
 
 ```javascript
+// v0.1
 const aliveIds = Array.prototype.slice.apply($('system.adapter.*.*.alive'));
 
 function getAdapterName(obj) {
