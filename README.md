@@ -20,6 +20,9 @@ Tips and tricks how to use the [JavaScript](https://github.com/ioBroker/ioBroker
   - [History data as csv via mail](logging/history-as-mail-csv.md)
   - [Save history data as csv to files](logging/history-save-csv.md)
 
+- MQTT
+  - [Republish the current value via interval](mqtt/republish-current-value.md)
+
 - Weather
   - [Get min and max temperature of yr.no weather](weather/yr-min-max-temperature.md)
   - [Fill astro states](weather/fill-astro-states.md)
