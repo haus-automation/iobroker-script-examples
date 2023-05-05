@@ -3,16 +3,17 @@
 ## Script
 
 ```javascript
-// v0.1
+// v0.2
 function addToEnum(enumId, objId) {
     if (existsObject(objId)) {
         if (existsObject(enumId)) {
             const enumObj = getObject(enumId);
 
             if (enumObj.type === 'enum') {
-                // Add state to members
-                enumObj.common.members.push(objId);
-                setObject(enumId, enumObj);
+                if (!enumObj.common.members.includes(objId)) {
+                    enumObj.common.members.push(objId);
+                    setObject(enumId, enumObj);
+                }
 
                 return true;
             } else {
@@ -33,18 +34,20 @@ addToEnum('enum.rooms.living_room', '0_userdata.0.mydate');
 ## Script (smarter?)
 
 ```javascript
-// v0.1
+// v0.2
 function addToEnum(enumId, objId) {
     if (existsObject(objId)) {
         if (existsObject(enumId)) {
             const enumObj = getObject(enumId);
 
             if (enumObj.type === 'enum') {
-                extendObject(enumId, {
-                    common: {
-                        members: Array.prototype.concat(enumObj.common.members, [objId])
-                    }
-                });
+                if (!enumObj.common.members.includes(objId)) {
+                    extendObject(enumId, {
+                        common: {
+                            members: Array.prototype.concat(enumObj.common.members, [objId])
+                        }
+                    });
+                }
 
                 return true;
             } else {
