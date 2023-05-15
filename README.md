@@ -10,6 +10,7 @@ Tips and tricks how to use the [JavaScript](https://github.com/ioBroker/ioBroker
 - Objects/States
   - [Add object id to enum](objects-states/add-objectid-to-enum.md)
   - [Get enum value of object definition](objects-states/enum-value-of-object-definition.md)
+  - [Delete old states](objects-states/delete-old-states.md)
 
 - System
   - [Get all stopped instances](system/get-all-stopped-instances.md)
