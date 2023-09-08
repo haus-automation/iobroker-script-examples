@@ -3,17 +3,14 @@
 ## Script
 
 ```javascript
-// v0.2
+// v0.3
 const suncalc = require('suncalc2');
 
 const prefix = 'javascript.0';
 
-function fillAstroStates() {
+async function fillAstroStates() {
     try {
-        const systemConfig = getObject('system.config');
-
-        // console.log(`Starting fillAstroStates with latitude: ${systemConfig.common.latitude} and longitude: ${systemConfig.common.longitude}`);
-
+        const systemConfig = await getObjectAsync('system.config');
         const times = suncalc.getTimes(new Date(), systemConfig.common.latitude, systemConfig.common.longitude);
 
         for (var t in times) {
@@ -23,10 +20,10 @@ function fillAstroStates() {
             const timeFormatted = `${h < 10 ? '0' + h : h}:${m < 10 ? '0' + m : m}`;
             const objId = `${prefix}.suncalc.times.${t}`;
 
-            if (!existsObject(objId)) {
-                createState(objId, timeFormatted, { name: `Astro ${t}`, type: 'string', role: 'value' }); 
+            if (!await existsObjectAsync(objId)) {
+                await createStateAsync(objId, timeFormatted, { name: `Astro ${t}`, type: 'string', role: 'value' });
             } else {
-                setState(objId, { val: timeFormatted, ack: true });
+                await setStateAsync(objId, { val: timeFormatted, ack: true });
             }
         }
     } catch (err) {
