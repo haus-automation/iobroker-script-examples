@@ -17,6 +17,7 @@ Tips and tricks how to use the [JavaScript](https://github.com/ioBroker/ioBroker
   - [Update geo position in system config](system/update-geo-position-system-config.md)
 
 - Logging
+  - [Log adapter stats to InfluxDB](logging/log-adapter-stats-to-influxdb.md)
   - [Migrate history data to InfluxDB](logging/migrate-history-to-influxdb.md)
   - [History data as csv via mail](logging/history-as-mail-csv.md)
   - [Save history data as csv to files](logging/history-save-csv.md)
