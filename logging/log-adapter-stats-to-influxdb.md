@@ -108,12 +108,12 @@ async function refreshAlive() {
     });
 }
 
-// Refresh aliveIds (alle 10min) - maybe new instances have been created
+// Refresh aliveIds (every 10min) - maybe new instances have been created / installed
 schedule('*/10 * * * *', () => {
     refreshAlive();
 });
 
-// And on startup
+// Run on startup
 refreshAlive();
 ```
 
