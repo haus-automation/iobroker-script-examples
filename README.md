@@ -29,6 +29,9 @@ Tips and tricks how to use the [JavaScript](https://github.com/ioBroker/ioBroker
   - [Get min and max temperature of yr.no weather](weather/yr-min-max-temperature.md)
   - [Fill astro states](weather/fill-astro-states.md)
 
+- Weather
+  - [Random joke from API to state](web/random-joke.md)
+
 ## Sponsored by
 
 [![ioBroker Master Kurs](https://haus-automatisierung.com/images/ads/ioBroker-Kurs.png)](https://haus-automatisierung.com/iobroker-kurs/?refid=iobroker-scripts)
