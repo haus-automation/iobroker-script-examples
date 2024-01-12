@@ -5,7 +5,7 @@ Since JavaScript-Adapter version `>= 7.3.0` the states for the **current day** a
 ## Script
 
 ```javascript
-// v0.4
+// v0.5
 const suncalc = require('suncalc2');
 
 const prefix = '0_userdata.0.suncalc';
@@ -23,15 +23,15 @@ async function fillAstroStates() {
         const systemConfig = await getObjectAsync('system.config');
         const times = suncalc.getTimes(d, systemConfig.common.latitude, systemConfig.common.longitude);
 
-        for (var t in times) {
-            const h = times[t].getHours();
-            const m = times[t].getMinutes();
+        for (const [name, time] of Object.entries(times)) {
+            const h = time.getHours();
+            const m = time.getMinutes();
 
             const timeFormatted = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
-            const objId = `${prefix}.${t}`;
+            const objId = `${prefix}.${name}`;
 
             if (!await existsObjectAsync(objId)) {
-                await createStateAsync(objId, timeFormatted, { name: `Astro ${t}`, type: 'string', role: 'value' });
+                await createStateAsync(objId, timeFormatted, { name: `Astro ${name}`, type: 'string', role: 'value' });
             } else {
                 await setStateAsync(objId, { val: timeFormatted, ack: true });
             }
