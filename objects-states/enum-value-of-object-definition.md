@@ -97,4 +97,4 @@ setState('0_userdata.0.test', 2, true);
 console.log(getStateOptionByValue('0_userdata.0.test')); // Ouput: "test 2"
 ```
 
-[![ioBroker Master Kurs](https://haus-automatisierung.com/images/ads/ioBroker-Kurs.png)](https://haus-automatisierung.com/iobroker-kurs/?refid=iobroker-scripts)
+[![ioBroker Master Kurs](https://haus-automatisierung.com/images/ads/ioBroker-Kurs.png?2024)](https://haus-automatisierung.com/iobroker-kurs/?refid=iobroker-scripts)
