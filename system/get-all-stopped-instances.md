@@ -3,8 +3,9 @@
 ## Script
 
 ```javascript
-// v0.2
-const aliveIds = Array.prototype.slice.apply($('system.adapter.*.*.alive'));
+// v0.3
+const aliveSelector = 'system.adapter.*.*.alive';
+let instanceTrigger = null;
 
 function getAdapterName(obj) {
     if (typeof obj.common.titleLang === 'object') {
@@ -18,11 +19,11 @@ function getAdapterName(obj) {
     return obj.common.title;
 }
 
-async function refreshList() {
+async function refreshList(aliveIds) {
     try {
         const resultList = [];
 
-        for (let aliveStateId of aliveIds) {
+        for (const aliveStateId of aliveIds) {
             const aliveState = await getStateAsync(aliveStateId);
 
             // Offline instances
@@ -30,11 +31,14 @@ async function refreshList() {
                 const instanceId = aliveStateId.replace('.alive', '');
                 const instanceObj = await getObjectAsync(instanceId);
 
-                resultList.push({
-                    'name': getAdapterName(instanceObj),
-                    'instance': instanceId.replace('system.adapter.', ''),
-                    'offlineSince': formatDate(aliveState.ts, 'TT.MM.JJJJ SS:mm:ss')
-                });
+                // Ignore scheduled adapters
+                if (instanceObj.common.mode == 'daemon') {
+                    resultList.push({
+                        'name': getAdapterName(instanceObj),
+                        'instance': instanceId.replace('system.adapter.', ''),
+                        'offlineSince': formatDate(aliveState.ts, 'TT.MM.JJJJ SS:mm:ss')
+                    });
+                }
             }
         }
 
@@ -44,6 +48,21 @@ async function refreshList() {
 
         console.error(err);
     }
+}
+
+async function createTriggersAndUpdate() {
+    const aliveIds = Array.prototype.slice.apply($(aliveSelector));
+
+    // refresh now
+    refreshList(aliveIds);
+
+    // Remove old trigger and recreate a new trigger on all alive IDs
+    if (instanceTrigger) {
+        unsubscribe(instanceTrigger);
+    }
+    instanceTrigger = on({ id: aliveIds, change: 'ne' }, () => {
+        refreshList(aliveIds);
+    });
 }
 
 createState('0_userdata.0.stoppedInstances', {
@@ -66,12 +85,13 @@ createState('0_userdata.0.stoppedInstances', {
     write: false,
     def: '[]',
 }, () => {
-    on({ id: aliveIds, change: 'ne' }, () => {
-        refreshList();
+    // Refresh aliveIds (every 10min) - maybe new instances have been created / installed
+    schedule('*/10 * * * *', () => {
+        createTriggersAndUpdate();
     });
 
-    // Init
-    refreshList();
+    // Run on startup
+    createTriggersAndUpdate();
 });
 ```
 
@@ -82,32 +102,12 @@ Result
   {
     "name": "Awtrix Light",
     "instance": "awtrix-light.0",
-    "offlineSince": "27.07.2023 13:56:17"
+    "offlineSince": "21.12.2023 12:18:44"
   },
   {
-    "name": "Geburtstage",
-    "instance": "birthdays.0",
-    "offlineSince": "08.09.2023 00:00:09"
-  },
-  {
-    "name": "DasWetter.com",
-    "instance": "daswetter.0",
-    "offlineSince": "08.09.2023 15:30:02"
-  },
-  {
-    "name": "DWD",
-    "instance": "dwd.0",
-    "offlineSince": "08.09.2023 15:05:01"
-  },
-  {
-    "name": "Feiertage (AT, CH, DE, IT)",
-    "instance": "feiertage.0",
-    "offlineSince": "08.09.2023 09:25:41"
-  },
-  {
-    "name": "iCal Calendar",
-    "instance": "ical.0",
-    "offlineSince": "08.09.2023 00:00:10"
+    "name": "BackItUp",
+    "instance": "backitup.0",
+    "offlineSince": "02.11.2023 10:38:53"
   },
   {
     "name": "ModBus",
@@ -115,24 +115,24 @@ Result
     "offlineSince": "03.03.2023 13:05:41"
   },
   {
+    "name": "MQTT-Client",
+    "instance": "mqtt-client.0",
+    "offlineSince": "07.01.2024 21:17:07"
+  },
+  {
+    "name": "Benachrichtigungsmanager",
+    "instance": "notification-manager.0",
+    "offlineSince": "09.12.2023 15:12:27"
+  },
+  {
     "name": "REST API",
     "instance": "rest-api.0",
-    "offlineSince": "12.07.2023 15:48:37"
-  },
-  {
-    "name": "Youtube",
-    "instance": "youtube.0",
-    "offlineSince": "08.09.2023 00:00:24"
-  },
-  {
-    "name": "yr.no Wetter",
-    "instance": "yr.0",
-    "offlineSince": "08.09.2023 15:43:12"
+    "offlineSince": "31.01.2024 14:20:26"
   },
   {
     "name": "ZigBee",
     "instance": "zigbee.0",
-    "offlineSince": "26.05.2023 12:30:48"
+    "offlineSince": "06.02.2024 14:39:04"
   }
 ]
 ```
