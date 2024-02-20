@@ -12,6 +12,9 @@ Tips and tricks how to use the [JavaScript](https://github.com/ioBroker/ioBroker
   - [Get enum value of object definition](objects-states/enum-value-of-object-definition.md)
   - [Delete old states](objects-states/delete-old-states.md)
 
+- Files
+  - [Inline image to telegram](files/inline-image-to-telegram.md)
+
 - System
   - [Get all stopped instances](system/get-all-stopped-instances.md)
   - [Update geo position in system config](system/update-geo-position-system-config.md)
