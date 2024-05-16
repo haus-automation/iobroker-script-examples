@@ -22,6 +22,7 @@ Tips and tricks how to use the [JavaScript](https://github.com/ioBroker/ioBroker
 - Logging
   - [Log adapter stats to InfluxDB](logging/log-adapter-stats-to-influxdb.md)
   - [Migrate history data to InfluxDB](logging/migrate-history-to-influxdb.md)
+  - [Migrate all history data to InfluxDB](logging/migrate-all-history-to-influxdb.md)
   - [History data as csv via mail](logging/history-as-mail-csv.md)
   - [Save history data as csv to files](logging/history-save-csv.md)
 
