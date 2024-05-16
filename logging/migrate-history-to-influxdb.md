@@ -9,74 +9,96 @@
 ## Script
 
 ```javascript
-// v0.1
-const migrateObjId = 'yr.0.forecastHourly.0h.air_temperature';
-const stepSize = 60 * 60 * 24 * 7 * 1000; // select 1 week per run
-const batchLimit = 1000;
+// v0.2
 const now = Date.now();
+const oneHour = 60 * 60 * 1000;
+const oneDay = oneHour * 24;
+const oneWeek = oneDay * 7;
 
-sendTo('history.0', 'getHistory', {
-    id: migrateObjId,
-    options: {
-        start: 1,
-        end: now,
-        aggregate: 'none',
-        returnNewestEntries: false,
-        limit: 1,
-    }
-}, async (historyData) => {
-    if (historyData.result.length > 0) {
-        let migratedValues = 0;
-        let startTs = historyData.result[0].ts;
-        console.log(`Running migration of ${migrateObjId} (starting @ ${formatDate(startTs, 'DD.MM.YYYY hh:mm:ss')})`);
+// EDIT THIS VALUES (IF NECESSARY)
+const migrateObjId = 'yr.0.forecastHourly.0h.air_temperature';
+const stepSize = oneWeek; // select per run
+const batchLimit = 1000;
 
-        while (startTs < now) {
-            migratedValues += await migrateRange(startTs, startTs + stepSize);
-            startTs += stepSize;
-        }
-
-        console.log(`Finished migration of ${migrateObjId} (saved ${migratedValues} values)`);
-    } else {
-        console.error(`Cannot migrate ${migrateObjId} - no data found`);
-    }
-});
-
-async function migrateRange(startTs, endTs) {
-    return new Promise((resolve) => {
-        sendTo('history.0', 'getHistory', {
-            id: migrateObjId,
+// DO NOT EDIT
+(async (objId) => {
+    const migrateRangeFunc = async (startTs, endTs) => {
+        const historyData = await sendToAsync('history.0', 'getHistory', {
+            id: objId,
             options: {
                 start: startTs,
-                end: endTs,
+                end: endTs - 1,
                 aggregate: 'none',
                 limit: batchLimit,
-                ignoreNull: true, // null is not supported by InfluxDB
-                // Get more information!
+                ignoreNull: false,
                 addId: true,
                 from: true,
                 ack: true,
                 q: true,
             }
-        }, (historyData) => {
-            const valueCount = historyData.result.length;
-            console.log(`Saving batch of ${migrateObjId} / ${valueCount} values / ${formatDate(startTs, 'DD.MM.YYYY hh:mm:ss')} - ${formatDate(endTs, 'DD.MM.YYYY hh:mm:ss')}`);
+        });
 
-            if (valueCount === batchLimit) {
-                console.warn(`Result returned ${valueCount} values - set smaller step size to migrate all information!`);
+        const valueCount = historyData?.result.length;
+        if (valueCount >= batchLimit) {
+            console.warn(`Result returned ${valueCount} records - set smaller step size to migrate all information!`);
+        }
+
+        if (valueCount > 0) {
+            const saveToDB = historyData.result.filter(r => r.val !== null); // NULL is not supported by InfluxDB
+            console.log(`Saving batch of ${objId}: ${valueCount} (${saveToDB.length}) values / ${formatDate(startTs, 'DD.MM.YYYY hh:mm:ss.sss')} - ${formatDate(endTs - 1, 'DD.MM.YYYY hh:mm:ss.sss')}`);
+
+            if (saveToDB.length > 0) {
+                await sendToAsync('influxdb.0', 'storeState', { id: objId, state: saveToDB });
             }
-            if (valueCount > 0) {
-                sendTo('influxdb.0', 'storeState', {
-                    id: migrateObjId,
-                    state: historyData.result
-                }, () => {
-                    resolve(valueCount);
-                });
-            } else {
-                resolve(0);
+        }
+
+        return valueCount;
+    };
+
+    const countResult = await sendToAsync('history.0', 'getHistory', {
+        id: objId,
+        options: {
+            start: 1,
+            end: now,
+            aggregate: 'count',
+            count: 1,
+            ignoreNull: false,
+        }
+    });
+    const recordCount = countResult.result.find(r => r.val !== null)?.val;
+
+    if (recordCount && recordCount > 0) {
+        const oldestRecordResult = await sendToAsync('history.0', 'getHistory', {
+            id: objId,
+            options: {
+                start: 1,
+                end: now,
+                aggregate: 'none',
+                ignoreNull: false,
+                returnNewestEntries: false,
+                limit: 100,
             }
         });
-    });
-}
+
+        if (oldestRecordResult?.result.length > 0) {
+            let migratedValues = 0;
+            let startTs = oldestRecordResult?.result[0].ts;
+            console.log(`Running migration of ${objId} (starting @ ${formatDate(startTs, 'DD.MM.YYYY hh:mm:ss.sss')})`);
+
+            while (startTs <= now) {
+                migratedValues += await migrateRangeFunc(startTs, startTs + stepSize);
+                startTs += stepSize;
+            }
+
+            console.log(`Finished migration of ${objId} (saved ${migratedValues} of ${recordCount} records)`);
+            if (migratedValues < recordCount) {
+                console.warn(`Missing records for ${objId}: ${recordCount - migratedValues}`);
+            }
+        } else {
+            console.error(`Cannot migrate ${objId} - no data found`);
+        }
+    }
+})(migrateObjId);
 ```
 
 [![ioBroker Master Kurs](https://haus-automatisierung.com/images/ads/ioBroker-Kurs.png?2024)](https://haus-automatisierung.com/iobroker-kurs/?refid=iobroker-scripts)
