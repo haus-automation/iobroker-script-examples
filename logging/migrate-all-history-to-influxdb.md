@@ -16,7 +16,7 @@ const oneDay = oneHour * 24;
 const oneWeek = oneDay * 7;
 
 // EDIT THIS VALUES (IF NECESSARY)
-const deleteOldValuesInHistory = false;
+const deleteOldValuesInHistory = false; // BE CAREFUL!
 const stepSize = oneWeek; // select per run
 const batchLimit = 1000;
 
@@ -67,7 +67,7 @@ async function runMigrationOf(objId) {
             console.log(`Saving batch of ${objId}: ${valueCount} (${saveToDB.length}) values / ${formatDate(startTs, 'DD.MM.YYYY hh:mm:ss.sss')} - ${formatDate(endTs - 1, 'DD.MM.YYYY hh:mm:ss.sss')}`);
 
             if (saveToDB.length > 0) {
-                //await sendToAsync('influxdb.0', 'storeState', { id: objId, state: saveToDB });
+                await sendToAsync('influxdb.0', 'storeState', { id: objId, state: saveToDB });
             }
         }
 
