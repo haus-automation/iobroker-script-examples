@@ -1,12 +1,11 @@
-# Get all stopped instances
+# Get all disconnected instances
 
 ## Script
 
 ```javascript
-// v0.4
-const aliveSelector = 'system.adapter.*.*.alive';
-const resultAliveObjId = '0_userdata.0.stoppedInstances';
-
+// v0.1
+const connectedSelector = 'system.adapter.*.*.connected';
+const resultObjId = '0_userdata.0.disconnectedInstances';
 let instanceTrigger = null;
 
 function getAdapterName(obj) {
@@ -21,54 +20,53 @@ function getAdapterName(obj) {
     return obj.common.title;
 }
 
-async function refreshList(aliveIds) {
+async function refreshList(connectedIds) {
     try {
-        const notAliveList = [];
+        const resultList = [];
 
-        for (const aliveStateId of aliveIds) {
-            const aliveState = await getStateAsync(aliveStateId);
+        for (const connectedStateId of connectedIds) {
+            const aliveState = await getStateAsync(connectedStateId);
 
-            if (aliveState) {
+            // Offline instances
+            if (aliveState && !aliveState.val) {
                 const instanceId = aliveStateId.replace('.alive', '');
                 const instanceObj = await getObjectAsync(instanceId);
 
-                // Ignore scheduled (and other non-daemon) adapters
+                // Ignore scheduled adapters
                 if (instanceObj.common.mode == 'daemon') {
-                    if (!aliveState.val) {
-                        notAliveList.push({
-                            'name': getAdapterName(instanceObj),
-                            'instance': instanceId.replace('system.adapter.', ''),
-                            'offlineSince': formatDate(aliveState.ts, 'TT.MM.JJJJ SS:mm:ss')
-                        });
-                    }
+                    resultList.push({
+                        'name': getAdapterName(instanceObj),
+                        'instance': instanceId.replace('system.adapter.', ''),
+                        'offlineSince': formatDate(aliveState.ts, 'TT.MM.JJJJ SS:mm:ss')
+                    });
                 }
             }
         }
 
-        await setStateAsync(resultAliveObjId, { val: JSON.stringify(notAliveList, null, 2), ack: true });
+        await setStateAsync(resultObjId, { val: JSON.stringify(resultList, null, 2), ack: true });
     } catch (err) {
-        await setStateAsync(resultAliveObjId, { val: JSON.stringify([]), ack: true });
+        await setStateAsync(resultObjId, { val: JSON.stringify([]), ack: true });
 
         console.error(err);
     }
 }
 
 async function createTriggersAndUpdate() {
-    const aliveIds = Array.prototype.slice.apply($(aliveSelector));
+    const connectedIds = Array.prototype.slice.apply($(connectedSelector));
 
     // refresh now
-    refreshList(aliveIds);
+    refreshList(connectedIds);
 
-    // Remove old alive trigger and recreate a new trigger on all alive IDs
+    // Remove old trigger and recreate a new trigger on all alive IDs
     if (instanceTrigger) {
         unsubscribe(instanceTrigger);
     }
-    instanceTrigger = on({ id: aliveIds, change: 'ne' }, () => {
-        refreshList(aliveIds);
+    instanceTrigger = on({ id: connectedIds, change: 'ne' }, () => {
+        refreshList(connectedIds);
     });
 }
 
-createState(resultAliveObjId, {
+createState(resultObjId, {
     name: {
         en: 'Offline instances',
         de: 'Offline-Instanzen',
@@ -88,7 +86,7 @@ createState(resultAliveObjId, {
     write: false,
     def: '[]',
 }, () => {
-    // Refresh aliveIds (every 10min) - maybe new instances have been created / installed
+    // Refresh connectedIds (every 10min) - maybe new instances have been created / installed
     schedule('*/10 * * * *', () => {
         createTriggersAndUpdate();
     });

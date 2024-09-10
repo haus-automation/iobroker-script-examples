@@ -1,4 +1,3 @@
-
 # Log adapter stats to InfluxDB
 
 This scripts logs cpu and memory to InfluxDB (for all running instances)
