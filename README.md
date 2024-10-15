@@ -35,6 +35,7 @@ Tips and tricks how to use the [JavaScript](https://github.com/ioBroker/ioBroker
   - [Fill astro states](weather/fill-astro-states.md)
 
 - Web
+  - [Instagram followers](web/instagram-followers.md)
   - [Random joke from API to state](web/random-joke.md)
   - [Download file and save to files](web/download-file-and-save.md)
 
