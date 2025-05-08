@@ -21,8 +21,8 @@ Tips and tricks how to use the [JavaScript](https://github.com/ioBroker/ioBroker
 
 - Logging
   - [Log adapter stats to InfluxDB](logging/log-adapter-stats-to-influxdb.md)
-  - [Migrate history data to InfluxDB](logging/migrate-history-to-influxdb.md)
-  - [Migrate all history data to InfluxDB](logging/migrate-all-history-to-influxdb.md)
+  - [Migrate history data to InfluxDB (or SQL)](logging/migrate-history-to-influxdb.md)
+  - [Migrate all history data to InfluxDB (or SQL)](logging/migrate-all-history-to-influxdb.md)
   - [Delete time range of measurement in InfluxDB](logging/delete-influxdb-measurements.md)
   - [History data as csv via mail](logging/history-as-mail-csv.md)
   - [Save history data as csv to files](logging/history-save-csv.md)
@@ -47,7 +47,7 @@ Tips and tricks how to use the [JavaScript](https://github.com/ioBroker/ioBroker
 
 The MIT License (MIT)
 
-Copyright (c) 2024 Matthias Kleine <info@haus-automatisierung.com>
+Copyright (c) 2025 Matthias Kleine <info@haus-automatisierung.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

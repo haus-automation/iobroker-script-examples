@@ -1,15 +1,17 @@
 
-# Migrate history data to InfluxDB
+# Migrate history data to InfluxDB (or SQL)
 
 ## Requirements
 
 - [history adapter](https://github.com/ioBroker/ioBroker.history)
-- [influxdb adapter](https://github.com/ioBroker/ioBroker.influxdb)
+- [influxdb adapter](https://github.com/ioBroker/ioBroker.influxdb) or [sql adapter](https://github.com/ioBroker/ioBroker.sql)
 
 ## Script
 
 ```javascript
-// v0.2
+// v0.3
+const targetInstance = 'influxdb.0'; // or 'sql.0'
+
 const now = Date.now();
 const oneHour = 60 * 60 * 1000;
 const oneDay = oneHour * 24;
@@ -48,7 +50,7 @@ const batchLimit = 1000;
             console.log(`Saving batch of ${objId}: ${valueCount} (${saveToDB.length}) values / ${formatDate(startTs, 'DD.MM.YYYY hh:mm:ss.sss')} - ${formatDate(endTs - 1, 'DD.MM.YYYY hh:mm:ss.sss')}`);
 
             if (saveToDB.length > 0) {
-                await sendToAsync('influxdb.0', 'storeState', { id: objId, state: saveToDB });
+                await sendToAsync(targetInstance, 'storeState', { id: objId, state: saveToDB });
             }
         }
 
